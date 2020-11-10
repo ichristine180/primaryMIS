@@ -6,6 +6,7 @@ import {
     createSubjectTable,
     createTeacherSubjectTable,
     createPointTable,
+    createStudentLevelTable,
     dropUserTable,
     dropStudentTable,
     dropLevelTable,
@@ -29,6 +30,7 @@ pool.connect().then(()=>{
     pool.query(createSubjectTable);
     pool.query(createTeacherSubjectTable);
     pool.query(createPointTable);
+    pool.query(createStudentLevelTable);
 }).catch(err=>{
     console.log(err.message)
 })
@@ -44,6 +46,7 @@ pool.connect().then(()=>{
             pool.query(dropSubjectTbale);
             pool.query(dropSubjectTeacherTable);
             pool.query(dropPointTable);
+            pool.query(dropStudentLevelTable);
  
           }).catch(err=>{
             console.log(err.message)
