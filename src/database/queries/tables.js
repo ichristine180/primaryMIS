@@ -45,6 +45,10 @@ export const createPointTable = `CREATE TABLE IF NOT EXISTS points(pointId SERIA
     FOREIGN KEY(teacherID) REFERENCES users(userId) on delete cascade on update cascade,
     FOREIGN KEY(classId) REFERENCES class(classId) on delete cascade on update cascade,
     FOREIGN KEY(studentId) REFERENCES students(studentId ) on delete cascade on update cascade)`;
+    export const createStudentLevelTable = `CREATE TABLE IF NOT EXISTS student_level(studentID integer not null,levelId integer not null,year varchar(10) not null,
+    PRIMARY KEY(studentId,year),
+    FOREIGN KEY(studentId) REFERENCES students(studentId) on delete cascade on update cascade,
+    FOREIGN KEY(levelId) REFERENCES levels(levelId) on delete cascade on update cascade)`;
 // query to drop tables
 export const dropUserTable = `DROP TABLE IF EXISTS users`;
 export const dropStudentTable = `DROP TABLE IF EXISTS students`;
@@ -53,3 +57,4 @@ export const dropClassTable = `DROP TABLE IF EXISTS class`;
 export const dropSubjectTbale = `DROP TABLE IF EXISTS subjects`;
 export const dropPointTable = `DROP TABLE IF EXISTS points`;
 export const dropSubjectTeacherTable = `DROP TABLE IF EXISTS subjects_teachers`;
+export const dropStudentLevelTable = `DROP TABLE IF EXISTS student_level`;
