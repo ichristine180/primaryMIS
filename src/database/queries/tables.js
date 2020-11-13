@@ -3,7 +3,7 @@ export const createUserTable = `CREATE TABLE IF NOT EXISTS users(userId SERIAL P
     names VARCHAR(100) NOT NULL,email VARCHAR(255) NOT NULL UNIQUE,
 phoneNumber VARCHAR(13) NOT NULL UNIQUE,
 role VARCHAR(40) NOT NULL,
-password VARCHAR(1024) NOT NULL,status VARCHAR(10) NOT NULL)`;
+password VARCHAR(1024) NOT NULL,status VARCHAR(10) NOT NULL,RegisteredDate date not null)`;
 export const CreateStudentTable = `CREATE TABLE IF NOT EXISTS students(studentId SERIAL PRIMARY KEY,
     studentNames VARCHAR(100) NOT NULL,
     parentsEmail VARCHAR(255) NOT NULL,
