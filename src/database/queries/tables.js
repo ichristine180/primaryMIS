@@ -32,18 +32,17 @@ export const createTeacherSubjectTable = `CREATE TABLE IF NOT EXISTS subjects_te
     PRIMARY KEY(subjectName,levelID),
     FOREIGN KEY(subjectName,levelID) REFERENCES subjects(subjectName,levelID) on delete cascade on update cascade,
     FOREIGN KEY(teacherID) REFERENCES users(userId) on delete cascade on update cascade)`;
-export const createPointTable = `CREATE TABLE IF NOT EXISTS points(pointId SERIAL PRIMARY KEY,
+export const createPointTable = `CREATE TABLE IF NOT EXISTS points(
     levelID integer not null,
     subjectName varchar(100) not null,
-    catOneMax float,
-    catTwoMax float,
-    examMax float,
+    catOne float,
+    catTwo float,
+    exam float,
     studentId integer not null,
     teacherId integer not null,
-    classId integer not null,
+    PRIMARY KEY(studentId,subjectName,levelID),
     FOREIGN KEY(subjectName,levelID) REFERENCES subjects(subjectName,levelID) on delete cascade on update cascade,
     FOREIGN KEY(teacherID) REFERENCES users(userId) on delete cascade on update cascade,
-    FOREIGN KEY(classId) REFERENCES class(classId) on delete cascade on update cascade,
     FOREIGN KEY(studentId) REFERENCES students(studentId ) on delete cascade on update cascade)`;
     export const createStudentLevelTable = `CREATE TABLE IF NOT EXISTS student_level(studentID integer not null,levelId integer not null,year varchar(10) not null,
     PRIMARY KEY(studentId,year),
