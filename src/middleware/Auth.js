@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import db from '../database/connection/query';
 import dotenv from 'dotenv';
-import {getByEmail} from '../database/queries/User';
+import {getByEmail,checkExist} from '../database/queries/User';
 
 class Auth{
     constructor(){
@@ -44,5 +44,87 @@ class Auth{
         const email = await jwt.verify(token, process.env.JWT_SECRET).email;
         return email;
     }
+
+    async isHeadMaster(req,res,next){
+        let email = await jwt.verify(req.headers['access-token'], process.env.JWT_SECRET).email
+       db.query(getByEmail,[email]).then(({
+        rows
+      }) =>
+       {
+           if(rows[0].role === 'HEAD_MASTER'){
+               next();
+           }else{
+            res.status(403).send({
+                status: 403,
+                message: "unauthorized User"
+              })
+           }
+       }).catch((err)=>{
+           res.send({
+               error: err.message
+           });
+       })
+      
+    }
+    async isTeacher(req,res,next){
+        let email = await jwt.verify(req.headers['access-token'], process.env.JWT_SECRET).email
+        db.query(getByEmail,[email]).then(({
+         rows
+       }) =>
+        {
+            if(rows[0].role === 'TEACHER'){
+                next();
+            }else{
+             res.status(403).send({
+                 status: 403,
+                 message: "unauthorized User"
+               })
+            }
+        }).catch((err)=>{
+            res.send({
+                error: err.message
+            });
+        })
+       
+     }
+     async isDOS(req,res,next){
+        let email = await jwt.verify(req.headers['access-token'], process.env.JWT_SECRET).email
+       db.query(getByEmail,[email]).then(({
+         rows
+       }) =>
+        {
+            if(rows[0].role === 'DOS'){
+                next();
+            }else{
+             res.status(403).send({
+                 status: 403,
+                 message: "unauthorized User"
+               })
+            }
+        }).catch((err)=>{
+            res.send({
+                error: err.message
+            });
+        })
+       
+     }
+     //check if email exist on updating user
+     async emailExist(req,res,next){
+         const email = req.body.email;
+         db.query(checkExist,[req.params.userid,email]).then((user)=>{
+             if(user.rows.length == 0){
+                 next()
+             }else{
+                 res.status(400).send({
+                     status:400,
+                     error: 'email already exist in our database!',
+                 });
+             }
+         }).catch((err)=>{
+             res.send({
+                 error: err.message,
+             });
+         });
+     }
 }
 export default new Auth();
