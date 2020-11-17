@@ -3,6 +3,7 @@ import express from 'express';
 import bodyparser from 'body-parser';
 import tables from './database/migrations/tables';
 import dotenv from 'dotenv';
+import Auth from './routers/Auth';
 dotenv.config();
 const app = express();
 app.use(bodyparser.json());
@@ -17,7 +18,8 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
   });
-
+  //calling all routers
+app.use(Auth);
   app.listen(PORT,()=>{
       console.log(`up and running on PORT ${PORT}`);
   })

@@ -7,3 +7,4 @@ export const update = `update table class set classname = $1,teacherid = $2 wher
 export const deleteClass = `update class set status = "0" where classid = $1 `;
 export const deletePem = `delete from class where classid =$1`;
 export const getByClassTeacher = `select * from class where teacherid =$1`;
+export const getByStudent =`select * from student_class where studentid = $1 and year =$2`;
