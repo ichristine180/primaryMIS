@@ -2,7 +2,7 @@ import AuthController from '../Controllers/Auth';
 import Auth from '../middleware/Auth';
 import express from 'express';
 const router = express.Router();
-router.post('/users/create',Auth.verifyToken,Auth.isHeadMaster, AuthController.createAccount);
+router.post('/users/create',AuthController.createAccount);
 router.post('/login', AuthController.login);
 router.put('/users/update/:userid',Auth.verifyToken,Auth.isHeadMaster,Auth.emailExist, AuthController.updateuser);
 router.delete('/users/delete/:userid',Auth.verifyToken,Auth.isHeadMaster,AuthController.deleteuser);

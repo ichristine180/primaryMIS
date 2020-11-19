@@ -1,15 +1,5 @@
 import moment from 'moment';
-import Auth from '../middleware/Auth';
-import db from '../database/connection/query';
-import { getByEmail,create,
-    update,
-    deleteuser,
-    getAll,
-    getById,
-    getByRole,
-    hideuser,
-    updatePassword,
-} from '../database/queries/User';
+import AuthService from '../services/AuthServices';
 import bcrypt from 'bcrypt';
 class AuthController{
 async createAccount(req,res){
@@ -22,13 +12,12 @@ const values = [
     '1',
     moment(new Date()),
 ];
-Auth.generateToken(req.body.email).then((token)=>{
-db.query(create,values).then((user) =>{
+AuthService.create(values).then((results) =>{
 res.status(201).send({
-    token: token,
+    token: results.token,
     status: 201,
     message: 'User created Successfully',
-    user: user.rows
+    user: results.user.rows
 });
 }).catch((err)=>{
     res.status(400).send({
@@ -36,36 +25,32 @@ res.status(201).send({
         Error:err.message
 });
 });
-});
 }
 async login(req,res){
-    Auth.generateToken(req.body.email).then((token)=>{
-        db.query(getByEmail,[req.body.email]).then((user)=>{
-            if(bcrypt.compareSync(req.body.password,user.rows[0].password)){
+    const data = [
+        req.body.email,
+        req.body.password,
+    ];
+     AuthService.login(data).then((results)=>{
+         if(results.user != undefined){
                 res.status(200).send({
-                    token:token,
+                    token:results.token,
                     status: 200,
-                    message:"sussesfully logged in",
-                     user: user.rows
-                  });
-            }else{
-                res.status(400).send({
-                    status: 400,
-                    error:"Invalid credentials"
-                  });
-            }
-        }).catch((err)=>{
-            res.status(400).send({
-                status: 400,
-                message: 'email not found'
-            })
+                    message:results.message,
+                     user: results.user.rows
+                  });   
+                }else{
+                    res.status(400).send({
+                        status: 400,
+                        message:results.message,
+                      });   
+                } 
         }).catch((err)=> {
             res.status(400).send({
                 status: 400,
-                message: err.message
+                error: err.message
             });
         });
-    });
 }
 async updateuser(req,res){
     const values =[
@@ -75,17 +60,17 @@ async updateuser(req,res){
         req.body.phonenumber,
         req.body.role,
     ];
-    db.query(update,values).then((user)=>{
-        if(user.rowCount){
-        res.status(201).send({
-     status: 201,
-     message: 'Sucessfully updated',
-     user: user.rows[0],
-        });
+    AuthService.updateUser(values).then((results)=>{
+        if(results.user.rowCount){
+            res.status(201).send({
+                status: 201,
+                message: results.message,
+                users: results.user.rows,
+            });
     }else{
         res.status(400).send({
             status: 400,
-            message: 'user not found',
+            message: results.message,
                });
     }
     }).catch((err)=>{
@@ -101,19 +86,11 @@ async passwordRest(req,res){
         req.body.userid,
         bcrypt.hashSync(req.body.password, 10),
     ];
-    db.query(updatePassword,values).then((user)=>{
-        if(user.rowCount){
-        res.status(201).send({
-     status: 201,
-     message: 'password Sucessfully updated',
-     user: user.rows[0],
+    AuthService.updatePassword(values).then((user)=>{
+    res.status(user.status).send({
+     status: user.status,
+     message: user.message,
         });
-    }else{
-        res.status(400).send({
-            status: 400,
-            message: 'password not updated',
-               });
-    }
     }).catch((err)=>{
         res.status(400).send({
             status: 400,
@@ -121,19 +98,13 @@ async passwordRest(req,res){
           });
     });
 }
+// deleting user permently from database
 async deleteuser(req,res){
-    db.query(deleteuser,[req.params.userid]).then((rows)=>{
-        if(rows.rowCount){
-        res.status(201).send({
-            status: 201,
-            message: 'Deleted Successfully'
+    AuthService.deleteuser([req.params.userid]).then((user)=>{
+        res.status(user.status).send({
+            status: user.status,
+            message:user.message
         });
-    }else{
-        res.status(400).send({
-            status: 400,
-            message: 'user not deleted'
-        });
-    }
     }).catch((err)=>{
         res.status(400).send({
             status: 400,
@@ -141,19 +112,13 @@ async deleteuser(req,res){
         });
     });
 }
+// deliting user by disabling their account
 async hideuser(req,res){
-    db.query(hideuser,[req.params.userid]).then((rows)=>{
-        if(rows.rowCount){
-        res.status(201).send({
-            status: 201,
-            message: 'Deleted Successfully'
+    AuthService.hideuser([req.params.userid]).then((user)=>{
+        res.status(user.status).send({
+            status: user.status,
+            message: user.message
         });
-    }else{
-        res.status(400).send({
-            status: 400,
-            message: 'user not deleted'
-        });
-    }
     }).catch((err)=>{
         res.status(400).send({
             status: 400,
@@ -161,38 +126,28 @@ async hideuser(req,res){
         });
     });
 }
+// getting all data from database
 async getAll(req,res){
-    db.query(getAll).then((users)=>{
-        if(users.rows.length != 0){
-        res.status(200).send({
-            status: 200,
-            users: users.rows,
+    AuthService.getAll().then((users)=>{
+        res.status(users.status).send({
+            status: users.status,
+            message: users.message,
+            users: users.users.rows,
         });
-    }else{
-        res.status(400).send({
-            status: 400,
-            message:'Users not found' ,
-        });
-    }
     }).catch((err)=>{
         res.status(400).send({
             message: err.message,
         });
     });
 }
+// getting one user
 async getById(req,res){
-db.query(getById,[req.params.userid]).then((user)=>{
-    if(user.rows.length != 0){
-        res.status(200).send({
-            status: 200,
-            user: user.rows,
+AuthService.findById([req.params.userid]).then((user)=>{
+        res.status(user.status).send({
+            status: user.status,
+            message: user.message,
+            user: user.user.rows,
         });
-    }else{
-        res.status(400).send({
-            status: 400,
-            message:'User not found' ,
-        });
-    }
 }).catch((err)=>{
     res.status(400).send({
         status: 400,
@@ -200,19 +155,14 @@ db.query(getById,[req.params.userid]).then((user)=>{
     })
 })
 }
+//getting all teachers( user with teacher role)
 async getTeachers(req,res){
-    db.query(getByRole).then((users)=>{
-        if(users.rows.length != 0){
-            res.status(200).send({
-                status: 200,
-                users: users.rows,
+    AuthService.findAllTeachers().then((users)=>{
+            res.status(users.status).send({
+                status: users.status,
+                message: users.message,
+                teachers: users.teachers.rows,
             });
-        }else{
-            res.status(400).send({
-                status: 400,
-                message:'Users not found' ,
-            });
-        }
     }).catch((err)=>{
         res.status(400).send({
             status: 400,
@@ -220,19 +170,14 @@ async getTeachers(req,res){
         })
     })
     }
+    // get user by email
     async findByEmail(req,res){
-        db.query(getByEmail,[req.body.email]).then((user)=>{
-            if(user.rows.length != 0){
-                res.status(200).send({
-                    status: 200,
-                    user: user.rows,
+        AuthService.findByEmail([req.body.email]).then((user)=>{
+            res.status(user.status).send({
+                status: user.status,
+                message: user.message,
+                user: user.user.rows,
                 });
-            }else{
-                res.status(400).send({
-                    status: 400,
-                    message: ' email not found',
-                });
-            }
         }).catch((err)=>{
             res.status(400).send({
                 status:400,
