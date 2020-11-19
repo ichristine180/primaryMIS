@@ -1,6 +1,6 @@
 export const create = `INSERT INTO students(
-	studentnames, parentsemail, parentsphonenumber,regestrationNumber,status)
-	VALUES ($1, $2, $3, $4) returning *`;
+	studentnames, parentsemail, parentsphonenumber,regestrationNumber,RegisteredDate,status)
+	VALUES ($1, $2, $3, $4,$5,$6) returning *`;
 export const update = `UPDATE students
 	SET studentnames=$1, parentsemail=$2, parentsphonenumber=$3, status=$4
 	WHERE studentid = $5`;

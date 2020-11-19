@@ -1,22 +1,23 @@
 import moment from 'moment';
-import db from '../database/connection/query';
-import { 
-    create,
-} from '../database/queries/Student';
-
+import StudentServices from '../services/StudentServices';
 class Students{
- async regesterStudent(req,res){
-     const values = [
-         req.body.studentNames,
-         req.body.parentsEmail,
-         req.body.parentsPhoneNumber,
 
+ async regesterStudent(req,res){
+     let regNumber = StudentServices.registrationNumber('IPRC');
+     const values = [
+         req.body.studentnames,
+         req.body.parentsemail,
+         req.body.parentsphonenumber,
+         regNumber,
+         moment(new Date()),
+         '1',
+        
      ];
-     db.query(create,values).then((student)=>{
-         res.status(200).send({
-             status: 200,
-             message: 'student registered successfully',
-             student: student
+     StudentServices.create(values).then((student)=>{
+         res.status(student.status).send({
+             status: student.status,
+             message: student.message,
+             student: student.student.rows,
          });
      }).catch((err)=>{
          res.status(400).send({
