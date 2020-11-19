@@ -8,6 +8,8 @@ export const CreateStudentTable = `CREATE TABLE IF NOT EXISTS students(studentId
     studentNames VARCHAR(100) NOT NULL,
     parentsEmail VARCHAR(255) NOT NULL,
     parentsPhoneNumber VARCHAR(13) NOT NULL,
+    regestrationNumber Varchar(200) NOT NULL,
+    RegisteredDate date not null,
     status VARCHAR(10) NOT NULL)`;
 export const createlevelTable = `CREATE TABLE IF NOT EXISTS levels(levelId SERIAL PRIMARY KEY,
     levelName VARCHAR(100) NOT NULL UNIQUE,

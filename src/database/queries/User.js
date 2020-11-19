@@ -22,4 +22,4 @@ export const create =`INSERT INTO users(
 	WHERE userid = $1`;
 	export const deleteuser = `delete from users where userid =$1`;
 	//check email exist on updating user
-	export const checkExist =`select * from users where userid =$1 and email != $2`;
+	export const checkExist =`select * from users where email = $2 and userid !=$1 `;
