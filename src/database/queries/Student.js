@@ -35,3 +35,5 @@ export const createStudentClass =`INSERT INTO student_class(
 	= $1 and students.status 
 	= "1" and student_class.year =$2`;
 
+// check student exist in databa
+export const checkStudentExist = `select * from students where studentnames = $1 and parentsphonenumber = $2`;
