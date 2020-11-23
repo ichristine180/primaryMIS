@@ -16,5 +16,21 @@ async create(data){
         student: student,
     }
 }
+async update(data){
+    let student = await db.query(update,data);
+    if(student.rowCount){
+        return{
+            status: 200,
+            message: 'student updated',
+            student: student,
+        }
+    }else{
+        return {
+            status: 400,
+            message: 'oops! student not updated',
+            student: [],
+        }
+    }
+}
 }
 export default new StudentServices();
