@@ -4,6 +4,7 @@ import bodyparser from 'body-parser';
 import tables from './database/migrations/tables';
 import dotenv from 'dotenv';
 import Auth from './routers/Auth';
+import Students from './routers/Students';
 dotenv.config();
 const app = express();
 app.use(bodyparser.json());
@@ -20,6 +21,7 @@ app.use((req, res, next) => {
   });
   //calling all routers
 app.use(Auth);
+app.use(Students);
   app.listen(PORT,()=>{
       console.log(`up and running on PORT ${PORT}`);
   })
