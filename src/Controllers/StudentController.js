@@ -46,5 +46,32 @@ class Students{
         });
     });
 }
+async deleteStudent(req,res){
+    StudentServices.deleteStudent([req.params.userid]).then((student)=>{
+        res.status(student.status).send({
+            status: student.status,
+            message:student.message
+        });
+    }).catch((err)=>{
+        res.status(400).send({
+            status: 400,
+            message: err.message
+        });
+    });
+}
+// getting all data from database
+async getAll(req,res){
+    StudentServices.getAll().then((students)=>{
+        res.status(students.status).send({
+            status: students.status,
+            message: students.message,
+            students: students.students.rows,
+        });
+    }).catch((err)=>{
+        res.status(400).send({
+            message: err.message,
+        });
+    });
+}
 }
 export default new Students();

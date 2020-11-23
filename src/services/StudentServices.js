@@ -1,7 +1,8 @@
 import moment from 'moment';
 import db from '../database/connection/query';
-import {create,update} from '../database/queries/Student';
+import {create,update,deleteRecord,getAll} from '../database/queries/Student';
 import random from 'random';
+import Students from '../middleware/Students';
 class StudentServices{
 
  registrationNumber(schoolNmae){
@@ -29,6 +30,37 @@ async update(data){
             status: 400,
             message: 'oops! student not updated',
             student: [],
+        }
+    }
+}
+async deleteStudent(data){
+    let student = await db.query(deleteRecord,data);
+    if(student.rowCount){
+        return{
+            status: 200,
+            message: 'student deleted',
+        }
+    }else{
+        return{
+            status: 400,
+            message: 'student not deleted',
+        }
+    }
+}
+// getting all students in db
+async getAll(){
+    let students = await db.query(getAll);
+    if(students.rows.length != 0){
+        return{
+            status: 200,
+            students: students,
+            message: 'data found',
+        }
+    }else{
+        return{
+            status: 400,
+            message: 'no data to display',
+            students: [],
         }
     }
 }

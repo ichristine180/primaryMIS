@@ -10,9 +10,9 @@ export const createStudentLevel = `INSERT INTO student_level(
 export const deleteStudent = `UPDATE students
 		SET status=$1
 		WHERE studentid = $2`;
-export const deleteRecord = `delete from student where studentid = $1`;
+export const deleteRecord = `delete from students where studentid = $1`;
 
-export const getAll =`select * from students where status = "1"`;
+export const getAll =`select * from students where status = '1'`;
 export const getOne = `select * from students where studentid = $1`;
 export const getByLevel = `select students.studentid, studentnames, parentsemail, 
 parentsphonenumber, 
