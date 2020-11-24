@@ -1,7 +1,7 @@
 import moment from 'moment';
 import db from '../database/connection/query';
 import {create,update,deleteRecord,getAll,createStudentLevel,
-    createStudentClass,getByLevel} from '../database/queries/Student';
+    createStudentClass,getByLevel,getAllByClass, getOne} from '../database/queries/Student';
 import random from 'random';
 class StudentServices{
 
@@ -95,5 +95,40 @@ async getAllByLevel(data){
         }
     }
 }
+// get all student in a class
+async getAllByClass(data){
+    let students = await db.query(getAllByClass,data);
+    if(students.rows.length != 0){
+        return{
+            status: 200,
+            students: students,
+            message: 'data found',
+        }
+    }else{
+        return{
+            status: 400,
+            message: 'no data to display',
+            students: [],
+        }
+    }
+}
+//get one student
+async getOne(data){
+    let student = await db.query(getOne,data);
+    if(student.rowCount){
+        return{
+            status: 200,
+            students: student,
+            message: 'data found',
+        }
+    }else{
+        return{
+            status: 400,
+            message: 'no data to display',
+            students: [],
+        }
+    }
+}
+
 }
 export default new StudentServices();

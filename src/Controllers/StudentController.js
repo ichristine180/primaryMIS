@@ -95,5 +95,32 @@ async getAllByLevel(req,res){
         });
     });
 }
+// getting all data from database by class
+async getAllByClass(req,res){
+    StudentServices.getAllByClass([req.params.classid,moment(new Date()).year()]).then((students)=>{
+        res.status(students.status).send({
+            status: students.status,
+            message: students.message,
+            students: students.students.rows,
+        });
+    }).catch((err)=>{
+        res.status(400).send({
+            message: err.message,
+        });
+    });
+}
+async findById(req,res){
+    StudentServices.getOne([req.params.studentid,moment(new Date()).year()]).then((students)=>{
+        res.status(students.status).send({
+            status: students.status,
+            message: students.message,
+            students: students.students.rows,
+        });
+    }).catch((err)=>{
+        res.status(400).send({
+            message: err.message,
+        });
+    });
+}
 }
 export default new Students();
