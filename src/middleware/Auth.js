@@ -126,5 +126,26 @@ class Auth{
              });
          });
      }
+     async notTeacher(req,res,next){
+        let email = await jwt.verify(req.headers['access-token'], process.env.JWT_SECRET).email
+        db.query(getByEmail,[email]).then(({
+         rows
+       }) =>
+        {
+            if(rows[0].role != 'TEACHER'){
+                next();
+            }else{
+             res.status(403).send({
+                 status: 403,
+                 message: "unauthorized User"
+               })
+            }
+        }).catch((err)=>{
+            res.send({
+                error: err.message
+            });
+        })
+       
+     }
 }
 export default new Auth();
