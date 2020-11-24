@@ -1,8 +1,7 @@
 import moment from 'moment';
 import db from '../database/connection/query';
-import {create,update,deleteRecord,getAll} from '../database/queries/Student';
+import {create,update,deleteRecord,getAll,createStudentLevel} from '../database/queries/Student';
 import random from 'random';
-import Students from '../middleware/Students';
 class StudentServices{
 
  registrationNumber(schoolNmae){
@@ -16,6 +15,13 @@ async create(data){
         message: 'student registered',
         student: student,
     }
+}
+async createLevels(data){
+    let level = await db.query(createStudentLevel,data);
+    if(level.rowCount){
+    console.log('level inserted');
+    }else
+    console.log('level not inserted');
 }
 async update(data){
     let student = await db.query(update,data);

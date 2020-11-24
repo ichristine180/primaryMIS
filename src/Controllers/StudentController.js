@@ -13,7 +13,10 @@ class Students{
          '1',
         
      ];
+     const levelsValues = [req.body.levelid,moment(new Date()).year()];
      StudentServices.create(values).then((student)=>{
+        levelsValues.unshift(student.student.rows[0].studentid);
+         StudentServices.createLevels(levelsValues);
          res.status(student.status).send({
              status: student.status,
              message: student.message,
