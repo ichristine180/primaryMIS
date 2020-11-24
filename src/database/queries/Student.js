@@ -15,13 +15,13 @@ export const deleteRecord = `delete from students where studentid = $1`;
 export const getAll =`select * from students where status = '1'`;
 export const getOne = `select * from students where studentid = $1`;
 export const getByLevel = `select students.studentid, studentnames, parentsemail, 
-parentsphonenumber, 
-status,levelid, year 
-from students inner join 
+parentsphonenumber,levelname,classname,student_level.year,student_level.levelid
+from students inner join student_class on student_class.studentid = students.studentid inner join class on student_class.classid = class.classid
+inner join
 student_level on students.studentid 
-= student_level.studentid where student_level.levelid 
+= student_level.studentid inner join levels on levels.levelid =student_level.levelid where student_level.levelid 
 = $1 and students.status 
-= "1" and student_level.year =$2`;
+= '1' and student_level.year =$2`;
 export const createStudentClass =`INSERT INTO student_class(
 	studentid, classid, year)
 	VALUES ($1, $2, $3)`;

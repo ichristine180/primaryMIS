@@ -7,5 +7,5 @@ const router = express.Router();
 router.post('/student/create',Auth.verifyToken,Auth.notTeacher, Student.checkStudent, StudentController.regesterStudent);
 router.put('/student/update/:id',Auth.verifyToken,Auth.notTeacher, Students.checkExist,StudentController.updateStudent);
 router.delete('/student/delete/:userid',Auth.verifyToken,Auth.notTeacher,StudentController.deleteStudent);
-router.get('/student/all',Auth.verifyToken,Auth.notTeacher,StudentController.getAll);
+router.get('/student/:levelid',Auth.verifyToken,Auth.notTeacher,StudentController.getAllByLevel);
 export default router;
