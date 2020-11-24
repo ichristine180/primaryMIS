@@ -1,6 +1,7 @@
 import moment from 'moment';
 import db from '../database/connection/query';
-import {create,update,deleteRecord,getAll,createStudentLevel} from '../database/queries/Student';
+import {create,update,deleteRecord,getAll,createStudentLevel,
+    createStudentClass,getByLevel} from '../database/queries/Student';
 import random from 'random';
 class StudentServices{
 
@@ -22,6 +23,13 @@ async createLevels(data){
     console.log('level inserted');
     }else
     console.log('level not inserted');
+}
+async createClass(data){
+    let result = await db.query(createStudentClass,data);
+    if(result.rowCount){
+    console.log('class inserted');
+    }else
+    console.log('class not inserted');
 }
 async update(data){
     let student = await db.query(update,data);
@@ -56,6 +64,23 @@ async deleteStudent(data){
 // getting all students in db
 async getAll(){
     let students = await db.query(getAll);
+    if(students.rows.length != 0){
+        return{
+            status: 200,
+            students: students,
+            message: 'data found',
+        }
+    }else{
+        return{
+            status: 400,
+            message: 'no data to display',
+            students: [],
+        }
+    }
+}
+// getting all students by level
+async getAllByLevel(data){
+    let students = await db.query(getByLevel,data);
     if(students.rows.length != 0){
         return{
             status: 200,

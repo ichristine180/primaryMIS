@@ -14,9 +14,14 @@ class Students{
         
      ];
      const levelsValues = [req.body.levelid,moment(new Date()).year()];
+     const classValues = [req.body.classid,moment(new Date()).year()];
      StudentServices.create(values).then((student)=>{
         levelsValues.unshift(student.student.rows[0].studentid);
+        classValues.unshift(student.student.rows[0].studentid)
+        // inserting level of student
          StudentServices.createLevels(levelsValues);
+         //inserting class of student
+         StudentServices.createClass(classValues);
          res.status(student.status).send({
              status: student.status,
              message: student.message,
@@ -65,6 +70,20 @@ async deleteStudent(req,res){
 // getting all data from database
 async getAll(req,res){
     StudentServices.getAll().then((students)=>{
+        res.status(students.status).send({
+            status: students.status,
+            message: students.message,
+            students: students.students.rows,
+        });
+    }).catch((err)=>{
+        res.status(400).send({
+            message: err.message,
+        });
+    });
+}
+// getting all data from database by level
+async getAllByLevel(req,res){
+    StudentServices.getAllByLevel([req.params.levelid,moment(new Date()).year()]).then((students)=>{
         res.status(students.status).send({
             status: students.status,
             message: students.message,
