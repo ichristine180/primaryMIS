@@ -15,9 +15,11 @@ import {
   dropClassTable,
   dropSubjectTbale,
   dropPointTable,
+  dropSchoolProfileTable,
   dropSubjectTeacherTable,
   dropStudentLevelTable,
   dropStudentClassTable,
+  createSchoolProfileTable
 } from "../queries/tables";
 import connection from "../connection/connection";
 const pool = connection.getPoolConnection();
@@ -28,7 +30,6 @@ class CREATETABLE {
         pool.connect();
         pool.query(createUserTable, (err, res) => {
        
-          
         });
         pool.query(createlevelTable, (err, res) => {
           
@@ -62,6 +63,10 @@ class CREATETABLE {
        
         
         });
+        pool.query(createSchoolProfileTable, (err, res) => {
+       
+        });
+        pool.end();
       },
     };
     this.dropTables = {
@@ -76,7 +81,9 @@ class CREATETABLE {
           pool.query(dropPointTable);
           pool.query(dropStudentLevelTable);
           pool.query(dropStudentClassTable);
+          pool.query(dropSchoolProfileTable);
         });
+        pool.end();
       },
     };
   }

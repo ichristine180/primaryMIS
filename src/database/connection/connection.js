@@ -1,4 +1,4 @@
-import {Client} from 'pg';
+import {Client, Pool} from 'pg';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -6,7 +6,7 @@ import config from './config';
 
 class Connection {
 constructor(){
-    this.getPoolConnection = () => new Client(config['development']);
+    this.getPoolConnection = () => new Pool(config['development']);
 }
 }
 
