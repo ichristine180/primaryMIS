@@ -1,8 +1,12 @@
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config();
 const config = {};
 
 config.development = {
-connectionString:  process.env.DEV_DATABASE_URL,
+  host: process.env.SERVER,
+  port: process.env.DB_PORT,
+  database: process.env.DB,
+  user: process.env.USER,
+  password: process.env.PASSWORD,
 };
 export default config;
