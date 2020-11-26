@@ -22,5 +22,29 @@ export const create=`INSERT INTO points(
     inner join levels 
     on levels.levelid 
     = points.levelid 
-    WHERE levelid 
-    = $1 and subjectname = $2`;
+    WHERE points.levelid 
+    = $1 and points.subjectname = $2`;
+
+    export const getByStudent = `SELECT subjects.levelid, subjects.subjectname, catone, cattwo, exam, students.studentid, teacherid,catMax,examMax,studentNames,levelName
+    FROM points inner join students 
+    on students.studentid = points.studentid 
+    inner join subjects 
+    on subjects.subjectname = points.subjectname 
+    and subjects.levelid 
+    =points.levelid 
+    inner join levels 
+    on levels.levelid 
+    = points.levelid 
+    WHERE points.studentid 
+    = $1`;
+    export const getByClass = `SELECT subjects.levelid, subjects.subjectname, catone, cattwo, exam, st.studentid, teacherid,catMax,examMax,studentNames,levelName,classid
+    FROM points inner join students as st
+    on st.studentid = points.studentid inner join student_class as sc on st.studentid = sc.studentid
+    inner join subjects 
+    on subjects.subjectname = points.subjectname 
+    and subjects.levelid 
+    =points.levelid 
+    inner join levels 
+    on levels.levelid 
+    = points.levelid 
+   WHERE sc.classid = $1`

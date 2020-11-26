@@ -12,7 +12,6 @@ import {
   hideuser,
   updatePassword,
 } from "../database/queries/User";
-import { use } from "random";
 
 class AuthService {
   async create(data) {
