@@ -42,6 +42,7 @@ class CREATETABLE {
       
      
       },
+
     };
     this.dropTables = {
       all: async () => {
