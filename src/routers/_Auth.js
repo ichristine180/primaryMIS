@@ -36,14 +36,6 @@ router.get(
   AuthController.getById
 );
 
-router.use(
-  "/",(req,res)=>{
-    res.status(404).send({
-      status:404,
-      message:"Page not found"
-    })
-  }
-);
 router.get(
   "/teachers/",
   Auth.verifyToken,

@@ -26,7 +26,6 @@ class AuthService {
   async login(data) {
     let token = await Auth.generateToken(data[0]);
     let user = await db.query(getByEmail, [data[0]]);
-    console.log(user)
     if (user.rowCount) {
       if (bcrypt.compareSync(data[1], user.rows[0].password)) {
         return {

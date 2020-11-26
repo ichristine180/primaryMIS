@@ -55,7 +55,7 @@ export const createPointTable = `CREATE TABLE IF NOT EXISTS points(
     FOREIGN KEY(studentId) REFERENCES students(studentId) on delete cascade on update cascade,
     FOREIGN KEY(classId) REFERENCES class(classId) on delete cascade on update cascade)`;
 
-    export const createSchoolProfileTable = `CREATE TABLE IF NOT EXISTS schoolprofile(school_id integer not null,school_name varchar(255) not null,schoolLogo varchar(255) not null,
+    export const createSchoolProfileTable = `CREATE TABLE IF NOT EXISTS schoolprofile(school_id integer not null,school_name varchar(255) not null unique,schoolLogo varchar(255) not null,schoolEmail varchar(255) unique,schoolPhone varchar(255) unique,schoolWebsite varchar(255) unique,
     province varchar(255) not null,district varchar(255) not null, sector varchar(255) not null, RegisteredDate date not null,
     PRIMARY KEY(school_id,school_name))`;
 // query to drop tables

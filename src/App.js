@@ -3,10 +3,7 @@ import express from "express";
 import bodyparser from "body-parser";
 import CREATETABLE from "./database/migrations/tables";
 import dotenv from "dotenv";
-import Auth from "./routers/Auth";
-import Students from "./routers/Students";
-import {runQuery} from './database/migrations/tables'
-import { createPointTable } from "./database/queries/tables";
+import api from './routers'
 dotenv.config();
 const app = express();
 app.use(bodyparser.json());
@@ -24,8 +21,7 @@ app.use((req, res, next) => {
   next();
 });
 //calling all routers
-app.use(Auth);
-app.use(Students);
+app.use(api);
 app.listen(PORT, () => {
   console.log(`up and running on PORT ${PORT} in ${env} environment`);
 });
