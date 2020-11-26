@@ -6,7 +6,7 @@ export const asignTeacherOnSubject =`INSERT INTO subjects_teachers(
     VALUES ($1, $2, $3)`;
 export const create = `INSERT INTO subjects(
         subjectname, catmax, exammax, levelid, status)
-        VALUES ($1, $2, $3, $4, $5);`;
+        VALUES ($1, $2, $3, $4, $5) returning *`;
 export const update =`UPDATE subjects
         SET subjectname=$3, catmax=$4, exammax=$5, levelid=$6
         WHERE where subjectname = $1 and levelid =$2`;
