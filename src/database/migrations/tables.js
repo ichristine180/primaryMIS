@@ -27,46 +27,20 @@ class CREATETABLE {
   constructor() {
     this.createTables = {
       all: async () => {
-        pool.connect();
-        pool.query(createUserTable, (err, res) => {
-       
+        pool.connect().then(()=>{
+          pool.query(createUserTable);
+          pool.query(createlevelTable);
+          pool.query(createClassTable);
+          pool.query(CreateStudentTable);
+          pool.query(createSubjectTable);
+          pool.query(createTeacherSubjectTable);
+          pool.query(createPointTable);
+          pool.query(createStudentLevelTable);
+          pool.query(createStudentClassTable);
+          pool.query(createSchoolProfileTable);
         });
-        pool.query(createlevelTable, (err, res) => {
-          
-         
-        });
-        pool.query(createClassTable, (err, res) => {
-
-         
-        });
-        pool.query(CreateStudentTable, (err, res) => {
       
-        
-        });
-        pool.query(createSubjectTable, (err, res) => {
-       
-          
-        });
-        pool.query(createTeacherSubjectTable, (err, res) => {
-        
-        
-        });
-        pool.query(createPointTable, (err, res) => {
-         
-        
-        });
-        pool.query(createStudentLevelTable, (err, res) => {
-         
-         
-        });
-        pool.query(createStudentClassTable, (err, res) => {
-       
-        
-        });
-        pool.query(createSchoolProfileTable, (err, res) => {
-       
-        });
-        pool.end();
+     
       },
     };
     this.dropTables = {
@@ -83,7 +57,7 @@ class CREATETABLE {
           pool.query(dropStudentClassTable);
           pool.query(dropSchoolProfileTable);
         });
-        pool.end();
+       
       },
     };
   }
