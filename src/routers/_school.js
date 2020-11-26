@@ -11,5 +11,23 @@ router.post(
   Auth.isHeadMaster,
   School.registerSchool
 );
+router.put(
+  "/update/:schoolid",
+  Auth.verifyToken,
+  Auth.isHeadMaster,
+  School.updateSchool
+);
+router.get(
+  "/:email",
+  Auth.verifyToken,
+  Auth.isHeadMaster,
+  School.getByEmail
+);
+router.get(
+  "/getbyid/:schoolid",
+  Auth.verifyToken,
+  Auth.isHeadMaster,
+  School.getById
+);
 
 export default router;

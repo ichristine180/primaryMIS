@@ -6,8 +6,6 @@ export const updateShool = `UPDATE schoolprofile
 	SET school_name=$1,schoolEmail=$2, schoolPhone=$3, schoolWebsite=$4,province=$5,district=$6,sector=$7
     WHERE school_id =$8 returning *`;
     export const avoidDuplicate = `select * from schoolprofile where schoolEmail=$1 or school_name=$2 or schoolPhone=$3 or schoolWebsite=$4`;
+    export const getById = `select * from schoolprofile where schoolEmail=$1`;
     export const getByEmail = `select * from schoolprofile where schoolEmail=$1`;
-    export const getByName = `select * from schoolprofile where school_name=$1`;
-    export const getByPhone = `select * from schoolprofile where schoolPhone=$1`;
-    export const getByWebsite = `select * from schoolprofile where schoolWebsite=$1`;
     

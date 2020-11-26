@@ -15,6 +15,7 @@ class ExecuteQuery {
           })
           .catch((err) => {
             reject(err);
+            reject(err.detail);
           });
       });
   }
