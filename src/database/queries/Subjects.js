@@ -9,12 +9,12 @@ export const create = `INSERT INTO subjects(
         VALUES ($1, $2, $3, $4, $5) returning *`;
 export const update =`UPDATE subjects
         SET subjectname=$3, catmax=$4, exammax=$5, levelid=$6
-        WHERE where subjectname = $1 and levelid =$2`;
+        WHERE subjectname = $1 and levelid =$2 returning *`;
 export const hidesubjects = `UPDATE subjects
         SET status='0'
         WHERE where subjectname = $1 and levelid =$2`;
 export const deleteSubject = `DELETE FROM subjects
-        WHERE where subjectname = $1 and levelid =$2`;
+        WHERE subjectname = $1 and levelid =$2`;
         //retrieve all subject assigned to one teacher
 export const getSubjectByTeacher = `SELECT teacherid, levelid, subjectname
         FROM subjects_teachers where teacherid = $1`

@@ -14,5 +14,21 @@ router.post(
 );
 router.get("/all", Auth.verifyToken, Auth.notTeacher, SubjectController.getAll);
 router.get("/:teacherid", Auth.verifyToken, SubjectController.getAllByTeacher);
-router.get("/levels/:levelid", Auth.verifyToken, SubjectController.getAllByLevel);
+router.get(
+  "/levels/:levelid",
+  Auth.verifyToken,
+  SubjectController.getAllByLevel
+);
+router.put(
+  "/update/:subjectname/:levelid",
+  Auth.verifyToken,
+  Auth.notTeacher,
+  SubjectController.update
+);
+router.delete(
+  "/delete/:subjectname/:levelid",
+  Auth.verifyToken,
+  Auth.notTeacher,
+  SubjectController.deleteSubject
+);
 export default router;

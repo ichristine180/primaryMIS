@@ -5,6 +5,8 @@ import {
   getAll,
   getSubjectByTeacher,
   getByLevel,
+  update,
+  deleteSubject,
 } from "../database/queries/Subjects";
 class SubjectService {
   async create(data) {
@@ -69,5 +71,35 @@ class SubjectService {
       };
     }
   }
+  async update(data) {
+    let subject = await db.query(update, data);
+    if (subject.rowCount) {
+      return {
+        status: 200,
+        message: "subject updated",
+        subject: subject,
+      };
+    } else {
+      return {
+        status: 400,
+        message: "oops! subject not updated",
+        subject: [],
+      };
+    }
+  }
+  async deleteSubject(data){
+    let subject = await db.query(deleteSubject,data);
+    if(subject.rowCount){
+        return{
+            status: 200,
+            message: 'subject deleted',
+        }
+    }else{
+        return{
+            status: 400,
+            message: 'subject not deleted',
+        }
+    }
+}
 }
 export default new SubjectService();

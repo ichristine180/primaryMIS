@@ -75,5 +75,45 @@ class SubjectController {
         });
       });
   }
+  async update(req, res) {
+    const values = [
+      req.params.subjectname,
+      req.params.levelid,
+      req.body.subjectname,
+      req.body.catmax,
+      req.body.exammax,
+      req.body.levelid,
+    ];
+    SubjectService.update(values)
+      .then((result) => {
+        console.log(result);
+        res.status(result.status).send({
+          status: result.status,
+          message: result.message,
+          subject: result.subject.rows,
+        });
+      })
+      .catch((err) => {
+        res.status(400).send({
+          status: 400,
+          error: err.message,
+        });
+      });
+  }
+  async deleteSubject(req, res) {
+    SubjectService.deleteSubject([req.params.subjectname, req.params.levelid])
+      .then((result) => {
+        res.status(result.status).send({
+          status: result.status,
+          message: result.message,
+        });
+      })
+      .catch((err) => {
+        res.status(400).send({
+          status: 400,
+          message: err.message,
+        });
+      });
+  }
 }
 export default new SubjectController();
