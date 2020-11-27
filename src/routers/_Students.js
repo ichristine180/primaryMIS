@@ -3,9 +3,11 @@ import express from "express";
 import Student from "../middleware/Students";
 import Students from "../middleware/Students";
 import Auth from "../middleware/Auth";
+import Validator from "../middleware/_validator";
 const router = express.Router();
 router.post(
   "/create",
+  Validator("registerStudent"),
   Auth.verifyToken,
   Auth.notTeacher,
   Student.checkStudent,
@@ -13,6 +15,7 @@ router.post(
 );
 router.put(
   "/update/:id",
+  Validator("registerStudent"),
   Auth.verifyToken,
   Auth.notTeacher,
   Students.checkExist,

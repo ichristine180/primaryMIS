@@ -21,7 +21,76 @@ class School {
         res.status(school.status).send({
           status: school.status,
           message: school.message,
-          student: school.school.rows[0],
+          school: school.school.rows[0],
+        });
+      })
+      .catch((err) => {
+        res.status(400).send({
+          status: 400,
+          error: err.message,
+        });
+      });
+  }
+
+  async updateSchool(req, res) {
+    const values = [
+      req.body.schoolname,
+      req.body.schooolemail,
+      req.body.schoolPhone,
+      req.body.schoolWebsite,
+      req.body.province,
+      req.body.district,
+      req.body.sector,
+      req.params.schoolid,
+    ];
+
+    SchoolService.updateSchool(values)
+      .then((school) => {
+        res.status(school.status).send({
+          status: school.status,
+          message: school.message,
+          school: school.school.rows[0],
+        });
+      })
+      .catch((err) => {
+        res.status(400).send({
+          status: 400,
+          error: err.message,
+        });
+      });
+  }
+
+  async getByEmail(req, res) {
+    const values = [
+      req.params.email,
+    ];
+
+    SchoolService.getByEmail(values)
+      .then((school) => {
+        res.status(school.status).send({
+          status: school.status,
+          message: school.message,
+          school: school.school.rows[0],
+        });
+      })
+      .catch((err) => {
+        res.status(400).send({
+          status: 400,
+          error: err.message,
+        });
+      });
+  }
+  async getById(req, res) {
+    const values = [
+      req.params.schoolid,
+    ];
+
+    SchoolService.getById(values)
+      .then((school) => {
+        res.status(school.status).send({
+          status: school.status,
+          message: school.message,
+          school: school.school.rows[0],
         });
       })
       .catch((err) => {

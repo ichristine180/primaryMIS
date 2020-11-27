@@ -1,11 +1,20 @@
 import AuthController from "../Controllers/Auth";
 import Auth from "../middleware/Auth";
+import Validator from "../middleware/_validator";
 import express from "express";
 const router = express.Router();
-router.post("/users/create", AuthController.createAccount);
-router.post("/login", AuthController.login);
+router.post(
+  "/users/create",
+  Validator("createUser"),
+  Auth.verifyToken,
+  Auth.isHeadMaster,
+  Auth.emailExist,
+  AuthController.createAccount
+);
+router.post("/login",Validator("login"), AuthController.login);
 router.put(
   "/users/update/:userid",
+  Validator("createUser"),
   Auth.verifyToken,
   Auth.isHeadMaster,
   Auth.emailExist,
@@ -42,5 +51,5 @@ router.get(
   Auth.isHeadMaster,
   AuthController.getTeachers
 );
-router.post("/user/resetPassowrd/", AuthController.passwordRest);
+router.post("/resetpassowrd", Validator("resetPassword"), AuthController.passwordRest);
 export default router;
