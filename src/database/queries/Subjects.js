@@ -1,5 +1,5 @@
-export const getAll = `select *from subjects where status ="1"`;
-export const getByLevel = `select *from subjects inner join levels on subjects.levelid = levels.levelid where subjects.status ='1' and levels.levelname =$1`;
+export const getAll = `select *from subjects where status ='1'`;
+export const getByLevel = `select * from subjects inner join levels on subjects.levelid = levels.levelid where subjects.status ='1' and levels.levelid =$1`;
 export const getOne = `select *from subjects where status = '1' and subjectname = $1 and levelid= $2`;
 export const asignTeacherOnSubject =`INSERT INTO subjects_teachers(
 	teacherid, levelid, subjectname)

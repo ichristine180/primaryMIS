@@ -1,7 +1,7 @@
 export const getAll = ``;
 export const create=`INSERT INTO points(
-	levelid, subjectname, catone, cattwo, exam, studentid, teacherid)
-    VALUES ($1, $2, $3, $4, $5, $6, $7);`;
+	levelid, subjectname, catone, cattwo, exam, studentid, teacherid,term)
+    VALUES ($1, $2, $3, $4, $5, $6, $7,$8);`;
     export const update =`UPDATE points
 	SET catone=$1, cattwo=$2, exam=$3
     WHERE levelid = $4 and subjectname = $5 and studentid =$6`;
@@ -48,3 +48,46 @@ export const create=`INSERT INTO points(
     on levels.levelid 
     = points.levelid 
    WHERE sc.classid = $1`
+
+   export const getBysubjectsInTerm =`SELECT subjects.levelid, 
+   subjects.subjectname, catone, 
+   cattwo, exam, students.studentid, teacherid,catMax,examMax,studentNames,levelName,term
+   FROM points inner join students 
+   on students.studentid = points.studentid 
+   inner join subjects 
+   on subjects.subjectname = points.subjectname 
+   and subjects.levelid 
+   =points.levelid 
+   inner join levels 
+   on levels.levelid 
+   = points.levelid 
+   WHERE points.levelid 
+   = $1 and points.subjectname = $2 and points.term = $3`;
+
+   export const getByStudentInTerm = `SELECT subjects.levelid, 
+   subjects.subjectname, catone, cattwo, exam, students.studentid, 
+   teacherid,catMax,examMax,studentNames,levelName,term
+   FROM points inner join students 
+   on students.studentid = points.studentid 
+   inner join subjects 
+   on subjects.subjectname = points.subjectname 
+   and subjects.levelid 
+   =points.levelid 
+   inner join levels 
+   on levels.levelid 
+   = points.levelid 
+   WHERE points.studentid 
+   = $1 and points.term = $2`;
+   export const getByClassInTerm = `SELECT subjects.levelid, subjects.subjectname, catone, cattwo, 
+   exam, st.studentid, teacherid,catMax,examMax,studentNames,
+   levelName,classid,term
+   FROM points inner join students as st
+   on st.studentid = points.studentid inner join student_class as sc on st.studentid = sc.studentid
+   inner join subjects 
+   on subjects.subjectname = points.subjectname 
+   and subjects.levelid 
+   =points.levelid 
+   inner join levels 
+   on levels.levelid 
+   = points.levelid 
+  WHERE sc.classid = $1 and points.term = $2`;
