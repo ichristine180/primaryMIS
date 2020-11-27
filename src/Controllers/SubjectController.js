@@ -11,9 +11,9 @@ class SubjectController {
         ];
         const teacherSubject = [req.body.teacherid,req.body.levelid];
         SubjectService.create(values).then((results)=>{
-            //console.log(results.response)
+           
            teacherSubject.push(results.response.rows[0].subjectname);
-           // issign teacher on subject
+        
             SubjectService.asignTeacherOnSubject(teacherSubject);
             res.status(results.status).send({
                 status: results.status,
