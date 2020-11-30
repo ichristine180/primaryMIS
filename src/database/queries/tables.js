@@ -37,13 +37,13 @@ export const createTeacherSubjectTable = `CREATE TABLE IF NOT EXISTS subjects_te
 export const createPointTable = `CREATE TABLE IF NOT EXISTS points(
     levelID integer not null,
     subjectName varchar(100) not null,
-    catOne float,
-    catTwo float,
-    exam float,
+    catOne float default 0.0,
+    catTwo float default  0.0,
+    exam float default 0.0,
     studentId integer not null,
     teacherId integer not null,
     term varchar(50) not null,
-    PRIMARY KEY(studentId,subjectName,levelID),
+    PRIMARY KEY(studentId,subjectName,levelID,term),
     FOREIGN KEY(subjectName,levelID) REFERENCES subjects(subjectName,levelID) on delete cascade on update cascade,
     FOREIGN KEY(teacherID) REFERENCES users(userId) on delete cascade on update cascade,
     FOREIGN KEY(studentId) REFERENCES students(studentId ) on delete cascade on update cascade)`;

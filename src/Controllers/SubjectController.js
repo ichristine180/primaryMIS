@@ -86,7 +86,7 @@ class SubjectController {
     ];
     SubjectService.update(values)
       .then((result) => {
-        console.log(result);
+        //console.log(result);
         res.status(result.status).send({
           status: result.status,
           message: result.message,
