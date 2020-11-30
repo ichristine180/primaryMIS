@@ -1,10 +1,10 @@
 export const getAll = ``;
 export const create=`INSERT INTO points(
 	levelid, subjectname, catone, cattwo, exam, studentid, teacherid,term)
-    VALUES ($1, $2, $3, $4, $5, $6, $7,$8);`;
+    VALUES ($1, $2, $3, $4, $5, $6, $7,$8) returning *`;
     export const update =`UPDATE points
 	SET catone=$1, cattwo=$2, exam=$3
-    WHERE levelid = $4 and subjectname = $5 and studentid =$6`;
+    WHERE levelid = $4 and subjectname = $5 and studentid =$6 returning *`;
     export const addCatTwoPoint = `UPDATE points
 	SET cattwo=$1
     WHERE levelid = $2 and subjectname = $3 and studentid =$4`;
@@ -25,7 +25,9 @@ export const create=`INSERT INTO points(
     WHERE points.levelid 
     = $1 and points.subjectname = $2`;
 
-    export const getByStudent = `SELECT subjects.levelid, subjects.subjectname, catone, cattwo, exam, students.studentid, teacherid,catMax,examMax,studentNames,levelName
+    export const getByStudent = `SELECT subjects.levelid, 
+    subjects.subjectname, catone,term,
+    cattwo, exam, students.studentid, teacherid,catMax,examMax,studentNames,levelName,term
     FROM points inner join students 
     on students.studentid = points.studentid 
     inner join subjects 
@@ -34,10 +36,10 @@ export const create=`INSERT INTO points(
     =points.levelid 
     inner join levels 
     on levels.levelid 
-    = points.levelid 
+    = points.levelid
     WHERE points.studentid 
     = $1`;
-    export const getByClass = `SELECT subjects.levelid, subjects.subjectname, catone, cattwo, exam, st.studentid, teacherid,catMax,examMax,studentNames,levelName,classid
+    export const getByClass = `SELECT subjects.levelid, subjects.subjectname, catone,term, cattwo, exam, st.studentid, teacherid,catMax,examMax,studentNames,levelName,classid
     FROM points inner join students as st
     on st.studentid = points.studentid inner join student_class as sc on st.studentid = sc.studentid
     inner join subjects 
@@ -50,7 +52,7 @@ export const create=`INSERT INTO points(
    WHERE sc.classid = $1`
 
    export const getBysubjectsInTerm =`SELECT subjects.levelid, 
-   subjects.subjectname, catone, 
+   subjects.subjectname, catone,
    cattwo, exam, students.studentid, teacherid,catMax,examMax,studentNames,levelName,term
    FROM points inner join students 
    on students.studentid = points.studentid 
@@ -78,7 +80,7 @@ export const create=`INSERT INTO points(
    = points.levelid 
    WHERE points.studentid 
    = $1 and points.term = $2`;
-   export const getByClassInTerm = `SELECT subjects.levelid, subjects.subjectname, catone, cattwo, 
+   export const getByClassInTerm = `SELECT subjects.levelid, subjects.subjectname, catone, cattwo,term,
    exam, st.studentid, teacherid,catMax,examMax,studentNames,
    levelName,classid,term
    FROM points inner join students as st
