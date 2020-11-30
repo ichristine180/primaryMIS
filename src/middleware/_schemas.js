@@ -12,7 +12,7 @@ const email = Joi.string()
   .required()
   .label("Email is required and should look like this : example@email.com!");
 const password = Joi.string()
-  .min(5)
+  .min(3)
   .required()
   .label(
     "Password is required,  it must have at least 5 letters"
