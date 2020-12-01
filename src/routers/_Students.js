@@ -7,7 +7,7 @@ import Validator from "../middleware/_validator";
 const router = express.Router();
 router.post(
   "/create",
-  Validator("registerStudent"),
+   Validator("registerStudent"),
   Auth.verifyToken,
   Auth.notTeacher,
   Student.checkStudent,

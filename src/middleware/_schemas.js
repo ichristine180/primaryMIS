@@ -22,13 +22,12 @@ schemas.createUser = Joi.object().keys({
   names: Joi.string()
     .trim()
     .required()
-    .regex(/^[A-Za-z_-]+$/)
     .min(5)
     .label(
       "First name and second name are required, it must have at least 3 letters and must contain only letters, underscores(_) and hyphens (-)"
     ),
   email,
-  phone: Joi.string()
+  phonenumber: Joi.string()
     .min(3)
     .required()
     .label(
@@ -56,7 +55,6 @@ schemas.registerStudent = Joi.object().keys({
   studentnames: Joi.string()
     .trim()
     .required()
-    .regex(/^[A-Za-z_-]+$/)
     .min(5)
     .label(
       "First name and second name are required, it must have at least 3 letters and must contain only letters, underscores(_) and hyphens (-)"
@@ -130,6 +128,34 @@ schemas.schoolSchema = Joi.object().keys({
     .required()
     .min(3)
     .label("School sector is required and must contain at least 3 letters"),
+});
+
+schemas.createPoints=Joi.object().keys({
+
+  levelid:Joi.any().required().label(
+    "Level id is required"
+  ),
+  subjectname:Joi.string().min(3).required().label(
+    "Subject name is required"
+  ),
+  catone:Joi.number().min(1).required().label(
+    "Cat one marks is required"
+  ),
+  cattwo:Joi.number().min(1).required().label(
+    "Cat two marks is required"
+  ),
+  exam:Joi.number().min(1).required().label(
+    "Exam marks is is required"
+  ),
+  studentid:Joi.number().min(1).required().label(
+    "Student id  is required"
+  ),
+  teacherid:Joi.number().min(1).required().label(
+    "Teacher id is required"
+  ),
+  term:Joi.number().min(1).required().label(
+    "Term is required"
+  ),
 });
 
 export default schemas;
