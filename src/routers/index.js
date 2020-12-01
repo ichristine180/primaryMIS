@@ -12,7 +12,7 @@ api.use("/api/user", Auth);
 api.use("/api/student", Students);
 api.use("/api/school", School);
 api.use("/api/subjects",Subject);
-api.use("/api/points/",Points);
+api.use("/api/points",Points);
 
 api.use("/", (req, res) => {
     res.status(404).send({

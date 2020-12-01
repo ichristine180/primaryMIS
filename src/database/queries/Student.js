@@ -40,6 +40,10 @@ export const createStudentClass =`INSERT INTO student_class(
 	= $1 and students.status 
 	= '1' and student_class.year =$2`;
 
+	export const getStudentById = `select students.studentid, studentnames, parentsemail, 
+	parentsphonenumber
+	from students INNER JOIN student_level ON student_level.studentid=students.studentid  where students.studentid =$1`;
+
 // check student exist in database
 export const checkStudentExist = `select * from students where studentnames = $1 and parentsphonenumber = $2`;
 export const checkExistOnUpdate = `select * from students where studentnames = $1 and parentsphonenumber = $2 and studentid != $3`

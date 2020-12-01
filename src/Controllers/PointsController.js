@@ -13,11 +13,19 @@ class PointsController {
       req.body.term,
     ];
     PointsServices.create(values).then((results) => {
-      res.status(results.status).send({
-        status: results.status,
-        message: results.message,
-        Points: results.response.rows,
-      });
+      if(results.status!==200){
+        res.status(results.status).send({
+          status: results.status,
+          message: results.message
+        });
+      }else{
+        res.status(results.status).send({
+          status: results.status,
+          message: results.message,
+          Points: results.response.rows,
+        });
+      }
+    
     }).catch((err)=>{
         res.status(400).send({
             status: 400,
