@@ -2,6 +2,7 @@ import db from "../database/connection/query";
 import {
   checkStudentExist,
   checkExistOnUpdate,
+  getStudentById
 } from "../database/queries/Student";
 
 class Student {
@@ -16,8 +17,22 @@ class Student {
     } else {
       res.status(400).send({
         status: 400,
-        message: "student exist in our database!",
+        message: "student exist in  database!",
       });
+    }
+  }
+  async checkExistById(req, res, next) {
+    let student = await db.query(getStudentById, [
+      req.params.id,
+    ]);
+    if (!student.rowCount) {
+      res.status(400).send({
+        status: 400,
+        message: "student doesn't exist in  database!",
+      });
+
+    } else {
+      next();
     }
   }
   async checkExist(req, res, next) {
@@ -31,7 +46,7 @@ class Student {
     } else {
       res.status(400).send({
         status: 400,
-        message: "student names exist in our database!",
+        message: "student names exist in  database!",
       });
     }
   }
