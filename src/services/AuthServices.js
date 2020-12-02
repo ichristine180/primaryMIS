@@ -1,5 +1,4 @@
 import db from "../database/connection/query";
-import { generateToken } from "../helpers/_auth";
 import Auth from "../middleware/Auth";
 import bcrypt from "bcrypt";
 import {
@@ -16,13 +15,7 @@ import {
 
 class AuthService {
   async create(data) {
-    const payload = {
-      names: data[0],
-      email: data[1],
-      phonenumber: data[2],
-      role: data[3],
-    };
-    let token = await generateToken(payload);
+    let token = await Auth.generateToken(data[1]);
     let user = await db.query(create, data);
     return {
       user: user,
@@ -30,16 +23,10 @@ class AuthService {
     };
   }
   async login(data) {
+    let token = await Auth.generateToken(data[0]);
     let user = await db.query(getByEmail, [data[0]]);
     if (user.rowCount) {
       if (bcrypt.compareSync(data[1], user.rows[0].password)) {
-        const payload = {
-          names: user.rows[0].names,
-          email: user.rows[0].email,
-          phonenumber: user.rows[0].phonenumber,
-          role: user.rows[0].role,
-        };
-        let token = await generateToken(payload);
         return {
           token: token,
           user: user.rows,
@@ -94,7 +81,7 @@ class AuthService {
     } else {
       return {
         status: 400,
-        message: "User doesn't exist",
+        message: "user not deleted",
       };
     }
   }

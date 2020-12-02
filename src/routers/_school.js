@@ -1,7 +1,6 @@
 import School from "../Controllers/School";
 import Auth from "../middleware/Auth";
-import schoolMideware from "../middleware/school";
-import userMiddleWare from "../middleware/user";
+import schoolMideware from '../middleware/school';
 import Validator from "../middleware/_validator";
 import express from "express";
 const router = express.Router();
@@ -9,28 +8,28 @@ const router = express.Router();
 router.post(
   "/create",
   Validator("schoolSchema"),
+    schoolMideware[0],
   Auth.verifyToken,
-  schoolMideware[0],
-  userMiddleWare[0],
+  Auth.isHeadMaster,
   School.registerSchool
 );
 router.put(
   "/update/:schoolid",
   Validator("schoolSchema"),
   Auth.verifyToken,
-  userMiddleWare[0],
+  Auth.isHeadMaster,
   School.updateSchool
 );
 router.get(
   "/:email",
- // Auth.verifyToken,
-  //userMiddleWare[0],
+  Auth.verifyToken,
+  Auth.isHeadMaster,
   School.getByEmail
 );
 router.get(
   "/getbyid/:schoolid",
   Auth.verifyToken,
-  userMiddleWare[0],
+  Auth.isHeadMaster,
   School.getById
 );
 
