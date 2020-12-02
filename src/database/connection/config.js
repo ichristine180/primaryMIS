@@ -9,4 +9,7 @@ config.development = {
   user: process.env.USER,
   password: process.env.PASSWORD,
 };
+config.production = {
+  connectionString: process.env.DATABASE_URL,
+}
 export default config;
