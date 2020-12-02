@@ -10,7 +10,8 @@
     "build": "babel src --out-dir dist",
     "start": "npm run build && node dist/App.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "babel": "babel-node --version"
+    "babel": "babel-node --version",
+    "heroku-postbuild": "npm install --production"
   },
   "author": "chris and dany",
   "license": "ISC",
@@ -31,11 +32,10 @@
     "moment": "^2.24.0",
     "morgan": "^1.10.0",
     "nodemon": "^1.19.1",
+    "password-generator": "^2.3.2",
     "pg": "^8.5.1",
     "random": "^2.2.0",
-    "regenerator-runtime": "^0.13.3"
-  },
-  "devDependencies": {
+    "regenerator-runtime": "^0.13.3",
     "@babel/preset-env": "^7.12.1",
     "babel-node": "0.0.1-security"
   }
