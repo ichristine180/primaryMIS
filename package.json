@@ -10,7 +10,9 @@
     "build": "babel src --out-dir dist",
     "start": "npm run build && node dist/App.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "babel": "babel-node --version"
+    "babel": "babel-node --version",
+    "heroku-postbuild": "npm install --production"
+    
   },
   "author": "chris and dany",
   "license": "ISC",
