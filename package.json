@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "App.js",
+  "engines": {
+    "npm": "6.4.1",
+    "node": "10.15.1"
+  },
   "scripts": {
     "dev": "nodemon --exec babel-node src/App.js",
     "db:insertadmin": "babel-node src/database/model/userModel.js",
