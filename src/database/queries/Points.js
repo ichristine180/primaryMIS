@@ -94,4 +94,4 @@ export const create=`INSERT INTO points(
    = points.levelid 
   WHERE sc.classid = $1 and points.term = $2`;
 
-  export const avoidDuplicates = `SELECT * FROM points WHERE studentid = $1`;
+  export const avoidDuplicates = `SELECT * FROM points WHERE studentid =$1 and levelid=$2 and subjectname=$3 and term=$4`;

@@ -11,32 +11,22 @@ import {
   getByClassInTerm,
   update,
 } from "../database/queries/Points";
-import { avoidDuplicates } from "../database/queries/Points";
 
 class Points {
   async create(data) {
-    const pointRes = await db.query(avoidDuplicates, [data[5]]);
-    console.log(pointRes.rowCount)
-    if (pointRes.rowCount) {
+    let points = await db.query(create, data);
+    if (points) {
       return {
-        status: 400,
-        message: "Marks already exist",
+        status: 200,
+        message: "Points added",
+        response: points,
       };
     } else {
-      let points = await db.query(create, data);
-      if (points) {
-        return {
-          status: 200,
-          message: "Points added",
-          response: points,
-        };
-      } else {
-        return {
-          status: 400,
-          message: "Error occured",
-          response: [],
-        };
-      }
+      return {
+        status: 400,
+        message: "Error occured",
+        response: [],
+      };
     }
   }
   async update(data) {
