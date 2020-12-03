@@ -16,6 +16,7 @@ import {
   createPosition,
   totalStudentMarks
 } from "../database/queries/Points";
+
 import {getReportSumationInTerm,getReportSumationInYear} from '../helpers/pointshelper';
 
 class Points {
@@ -63,11 +64,26 @@ class Points {
      
       }
     } else {
+
       return {
         status: 400,
-        message: "Error occured",
-        response: [],
+        message: "Marks already exist",
       };
+    } else {
+      let points = await db.query(create, data);
+      if (points) {
+        return {
+          status: 200,
+          message: "Points added",
+          response: points,
+        };
+      } else {
+        return {
+          status: 400,
+          message: "Error occured",
+          response: [],
+        };
+      }
     }
   }
   async update(data) {

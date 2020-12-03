@@ -16,7 +16,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "babel": "babel-node --version",
     "heroku-postbuild": "npm install --production"
-    
+
   },
   "author": "chris and dany",
   "license": "ISC",

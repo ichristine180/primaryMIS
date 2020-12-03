@@ -1,7 +1,7 @@
 import StudentController from "../Controllers/StudentController";
 import express from "express";
 import Student from "../middleware/Students";
-import userMiddleWare from '../middleware/user';
+import Students from "../middleware/Students";
 import Auth from "../middleware/Auth";
 import Validator from "../middleware/_validator";
 const router = express.Router();
@@ -9,23 +9,22 @@ router.post(
   "/create",
    Validator("registerStudent"),
   Auth.verifyToken,
-  userMiddleWare[5],
-   Student.checkStudent,
+  Auth.notTeacher,
+  Student.checkStudent,
   StudentController.regesterStudent
 );
 router.put(
   "/update/:id",
   Validator("registerStudent"),
   Auth.verifyToken,
-  userMiddleWare[5],
-  Student.checkExistById,
-  Student.checkExist,
+  Auth.notTeacher,
+  Students.checkExist,
   StudentController.updateStudent
 );
 router.delete(
-  "/delete/:studentid",
+  "/delete/:userid",
   Auth.verifyToken,
-  userMiddleWare[5],
+  Auth.notTeacher,
   StudentController.deleteStudent
 );
 router.get(

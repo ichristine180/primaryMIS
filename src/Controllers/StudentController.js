@@ -57,7 +57,7 @@ class Students {
       });
   }
   async deleteStudent(req, res) {
-    StudentServices.deleteStudent([req.params.studentid])
+    StudentServices.deleteStudent([req.params.userid])
       .then((student) => {
         res.status(student.status).send({
           status: student.status,

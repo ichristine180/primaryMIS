@@ -106,6 +106,7 @@ export const getByClassInTerm = `SELECT subjects.levelid, subjects.subjectname, 
    = points.levelid 
   WHERE sc.classid = $1 and points.term = $2`;
 
+
   //export const getPositionsByClass = `SELECT * from position WHERE classid = $1`;
   export const checkIfItsNoFirst = `SELECT * from positions WHERE studentid =$1 and levelid=$2 and term=$3`;
   export const getPositionsByClassInTerm = `SELECT * from positions WHERE classid = $1 and term=$2`;
@@ -120,3 +121,4 @@ export const examSumPerTerm = `SELECT sum(exam)  as examSumPerTerm FROM points w
 export const examSumPerYear = `SELECT sum(exam)  as examSumPerYear FROM points where studentid=$1 and levelid=$2`;
 export const maxMarks = `SELECT sum(catmax) as catmax, sum(exammax) as exammax, sum(catmax+exammax) as totalmax from subjects`;
 export const avoidDuplicates = `SELECT * FROM points WHERE studentid =$1 and levelid=$2 and subjectname=$3 and term=$4`;
+

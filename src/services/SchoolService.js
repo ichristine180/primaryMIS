@@ -42,7 +42,6 @@ class SchoolService {
   }
   async getByEmail(data) {
     let school = await db.query(getByEmail, data);
-   //  console.log(school)
     if (school.rows[0]) {
       return {
         status: 200,
