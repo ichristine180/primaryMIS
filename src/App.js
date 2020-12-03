@@ -17,6 +17,6 @@ globlaMiddleWare(app);
 //calling all routers
 app.use('/',api);
 app.listen(PORT, () => {
-  console.log(`up and running on PORT ${PORT} in ${env} environment`);
+  console.log(`Primary mis is app and running on PORT ${PORT} in ${env} mode `);
 });
 export default app;
