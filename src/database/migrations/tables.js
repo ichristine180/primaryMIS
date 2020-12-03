@@ -19,7 +19,8 @@ import {
   dropSubjectTeacherTable,
   dropStudentLevelTable,
   dropStudentClassTable,
-  createSchoolProfileTable
+  createSchoolProfileTable,
+  createPositionTable
 } from "../queries/tables";
 import connection from "../connection/connection";
 const pool = connection.getPoolConnection();
@@ -38,6 +39,7 @@ class CREATETABLE {
           pool.query(createStudentLevelTable);
           pool.query(createStudentClassTable);
           pool.query(createSchoolProfileTable);
+          pool.query(createPositionTable);
         });
       
      

@@ -14,6 +14,9 @@ export const CreateStudentTable = `CREATE TABLE IF NOT EXISTS students(studentId
 export const createlevelTable = `CREATE TABLE IF NOT EXISTS levels(levelId SERIAL PRIMARY KEY,
     levelName VARCHAR(100) NOT NULL UNIQUE,
     status VARCHAR(10) NOT NULL)`;
+export const createPositionTable = `CREATE TABLE IF NOT EXISTS positions(studentid INTEGER,
+                 term varchar(10), levelid INTEGER, totalmarks FLOAT,  PRIMARY KEY(studentid,term,levelid))`;
+
 export const createClassTable = `CREATE TABLE IF NOT EXISTS class(classId  SERIAL PRIMARY KEY, 
     className VARCHAR(100) NOT NULL UNIQUE,teacherID integer not null UNIQUE,
     levelID INTEGER not null,
@@ -26,7 +29,7 @@ export const createSubjectTable = `CREATE TABLE IF NOT EXISTS subjects(
     examMax integer,
     levelId integer not null,
     status varchar(10) not null,
-    PRIMARY KEY(subjectName,levelID),
+   
     FOREIGN KEY(levelID) REFERENCES levels(levelId) on delete cascade on update cascade)`;
 export const createTeacherSubjectTable = `CREATE TABLE IF NOT EXISTS subjects_teachers(teacherId integer not null,
     levelID integer not null,
@@ -47,16 +50,16 @@ export const createPointTable = `CREATE TABLE IF NOT EXISTS points(
     FOREIGN KEY(subjectName,levelID) REFERENCES subjects(subjectName,levelID) on delete cascade on update cascade,
     FOREIGN KEY(teacherID) REFERENCES users(userId) on delete cascade on update cascade,
     FOREIGN KEY(studentId) REFERENCES students(studentId ) on delete cascade on update cascade)`;
-    export const createStudentLevelTable = `CREATE TABLE IF NOT EXISTS student_level(studentID integer not null,levelId integer not null,year varchar(10) not null,
+export const createStudentLevelTable = `CREATE TABLE IF NOT EXISTS student_level(studentID integer not null,levelId integer not null,year varchar(10) not null,
     PRIMARY KEY(studentId,year),
     FOREIGN KEY(studentId) REFERENCES students(studentId) on delete cascade on update cascade,
     FOREIGN KEY(levelId) REFERENCES levels(levelId) on delete cascade on update cascade)`;
-    export const createStudentClassTable = `CREATE TABLE IF NOT EXISTS student_class(studentID integer not null,classId integer not null,year varchar(10) not null,
+export const createStudentClassTable = `CREATE TABLE IF NOT EXISTS student_class(studentID integer not null,classId integer not null,year varchar(10) not null,
     PRIMARY KEY(studentId,year),
     FOREIGN KEY(studentId) REFERENCES students(studentId) on delete cascade on update cascade,
     FOREIGN KEY(classId) REFERENCES class(classId) on delete cascade on update cascade)`;
 
-    export const createSchoolProfileTable = `CREATE TABLE IF NOT EXISTS schoolprofile(school_id integer not null,school_name varchar(255) not null unique,schoolLogo varchar(255) not null,schoolEmail varchar(255) unique,schoolPhone varchar(255) unique,schoolWebsite varchar(255) unique,
+export const createSchoolProfileTable = `CREATE TABLE IF NOT EXISTS schoolprofile(school_id integer not null,school_name varchar(255) not null unique,schoolLogo varchar(255) not null,schoolEmail varchar(255) unique,schoolPhone varchar(255) unique,schoolWebsite varchar(255) unique,
     province varchar(255) not null,district varchar(255) not null, sector varchar(255) not null, RegisteredDate date not null,
     PRIMARY KEY(school_id,school_name))`;
 // query to drop tables
