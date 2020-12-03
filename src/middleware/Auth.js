@@ -3,7 +3,6 @@ import db from "../database/connection/query";
 import dotenv from "dotenv";
 import { getByEmail, checkExist } from "../database/queries/User";
 import { decodeToken } from "../helpers/_auth";
-import user from "./user";
 
 class Auth {
   constructor() {
