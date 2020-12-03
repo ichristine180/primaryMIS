@@ -6,7 +6,7 @@ import config from './config';
 
 class Connection {
 constructor(){
-    this.getPoolConnection = () => new Pool(config['development']);
+    this.getPoolConnection = () => new Pool(config[process.env.NODE_ENV]);
 }
 }
 
