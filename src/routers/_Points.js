@@ -7,37 +7,34 @@ import db from "../database/connection/query";
 import { avoidDuplicates } from "../database/queries/Points";
 
 import Auth from "../middleware/Auth";
-import userMiddleWare from "../middleware/user";
+import app from "../App";
+import { async } from "regenerator-runtime";
 const router = express.Router();
 
-router.post(
+router.use("/create", Validator("createPoints"));
+router.use(
   "/create",
-  Validator("createPoints"),
-  Auth.verifyToken,
-  pointsMiddleWare.isTeacherExist,
-  pointsMiddleWare.isStudentExist,
-  pointsMiddleWare.isLevelExists,
-  pointsMiddleWare.isSubjectExist,
-  pointsMiddleWare.avoidDuplicate,
-  PointsController.create
+  Auth.verifyToken
 );
+
+router.post("/create", PointsController.create);
 
 router.put(
   "/update/:levelid/:subjectname/:studentid",
   Auth.verifyToken,
-  userMiddleWare[1],
+  Auth.isTeacher,
   PointsController.update
 );
 router.get(
   "/all/:levelid/:subjectname",
   Auth.verifyToken,
-  userMiddleWare[1],
+  Auth.isTeacher,
   PointsController.getBysubjects
 );
 router.get(
   "/AllInterm/:levelid/:subjectname",
   Auth.verifyToken,
-  userMiddleWare[1],
+  Auth.isTeacher,
   PointsController.getBysubjectsInTerm
 );
 router.get(

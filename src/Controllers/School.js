@@ -65,13 +65,6 @@ class School {
       req.params.email,
     ];
 
-        //  res.status(200).send({
-        //   status: 200,
-        //   message: "Data found",
-        //   school: {name:"Danny"},
-        // });
-      
-
     SchoolService.getByEmail(values)
       .then((school) => {
         res.status(school.status).send({
@@ -85,8 +78,6 @@ class School {
           status: 400,
           error: err.message,
         });
-      }).finally(()=>{
-        res.end()
       });
   }
   async getById(req, res) {

@@ -40,27 +40,6 @@ schemas.createUser = Joi.object().keys({
   password,
 });
 
-schemas.updateUser = Joi.object().keys({
-  names: Joi.string()
-    .trim()
-    .required()
-    .min(5)
-    .label(
-      "First name and second name are required, it must have at least 3 letters and must contain only letters, underscores(_) and hyphens (-)"
-    ),
-  email,
-  phonenumber: Joi.string()
-    .min(3)
-    .required()
-    .label(
-      "Phone is required,  it must have at least 3 letters and must contain only letters"
-    ),
-  role: Joi.string()
-    .valid("TEACHER", "DOS", "HEAD_MASTER")
-    .required()
-    .label("Role is required, it must be admin or moderator"),
-});
-
 schemas.login = Joi.object().keys({
   email,
   password,
@@ -92,22 +71,13 @@ schemas.registerStudent = Joi.object().keys({
     .label(
       "Phone is required,  it must have at least 3 letters and must contain only letters"
     ),
-    levelid: Joi.number()
-    .required()
-    .label(
-      "Student level is required!"
-    ),
-    classid: Joi.number()
-    .required()
-    .label(
-      "Student class is required!"
-    ),
 });
 schemas.createSubject = Joi.object().keys({
   subjectname: Joi.string()
     .trim()
     .required()
-    .min(2)
+    .regex(/^[A-Za-z_-]+$/)
+    .min(5)
     .label(
       "Subject name are required, it must have at least 3 letters and must contain only letters, underscores(_) and hyphens (-)"
     ),
